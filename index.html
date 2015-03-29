@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Webmail</title>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="style.css"/>
+        <!--[if lt IE 9]>
+            <script src="html5shiv.js"></script>
+        <![endif]-->
+
+    </head>
+    <body ng-app="Webmail" ng-controller="WebmailCtrl">
+
+        <div class="container">
+
+            <ul class="nav nav-pills spacer">
+                <li ng-repeat="dossier in dossiers"
+                    ng-class="{ active: dossier == dossierCourant }"><a href="#/{{dossier.value}}">{{dossier.label}}</a></li>
+            </ul>
+
+            <div ng-show="dossierCourant != null &amp;&amp; emailSelectionne == null">
+                <table class="table table-striped table-hover spacer">
+                <thead>
+                    <tr>
+                        <th>De</th>
+                        <th>&Agrave;</th>
+                        <th>Objet</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="email in dossierCourant.emails" class="clickable" ng-click="versEmail(dossierCourant, email)">
+                        <td>{{email.from}}</td>
+                        <td>{{email.to}}</td>
+                        <td>{{email.subject}}</td>
+                        <td>{{email.date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">Le dossier contient {{dossierCourant.emails.length}} mails.</div>
+
+            </div>
+            
+            <div ng-show="emailSelectionne != null" class="spacer">
+                <div class="well">
+                    <h1>{{emailSelectionne.subject}}</h1>
+                    <p><label>De :</label> <span>{{emailSelectionne.from}}</span></p>
+                    <p><label>&Agrave; :</label> <span>{{emailSelectionne.to}}</span></p>
+                    <p><label>Date :</label> <span>{{emailSelectionne.date}}</span></p>
+                </div>
+
+                <p ng-bind-html="emailSelectionne.content"></p>
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>        
+
+    </body>
+</html>
