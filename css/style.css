@@ -1,0 +1,57 @@
+﻿a {
+	cursor: pointer;
+}
+
+.spacer {
+	margin-top: 20px;
+}
+
+.hSpacer {
+	margin-left: 20px;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: #428BCA;
+  color: #ffffff;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.colDe {
+	width: 20%;
+}
+
+.colA {
+	width: 15%;
+}
+
+.colObjet {
+	width: 45%;
+}
+
+.colDate {
+	width: 15%;
+}
+
+.surbrillanceRecherche {
+	background-color: #FFD42A;
+}
+
+.labelChampNouveauMail {
+	width: 70px;
+}
+
+.input-group {
+	width: 100%;
+}
+
+.contenuNouveauMail {
+	width: 100%;
+}
+
+input.ng-invalid {
+	background-color: rgba(255, 0, 0, 0.5);
+}
