@@ -1,4 +1,4 @@
-﻿a {
+a {
 	cursor: pointer;
 }
 
@@ -54,4 +54,9 @@
 
 input.ng-invalid {
 	background-color: rgba(255, 0, 0, 0.5);
+}
+
+.mailNonLu{
+    font-weight: bold;
+    bgcolor: #d41515;
 }

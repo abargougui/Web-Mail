@@ -34,21 +34,39 @@
 
             <div ng-show="vueCourante == 'vueDossier'">
 
-                <div class="spacer input-group">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-search"></span>
+                 <div class="row">
+                      <div class="col-lg-6">
+                        <div class="input-group">
+                          <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </div>
+                                        <input type="text" ng-model="recherche" class="form-control" placeholder="Rechercher un e-mail..."/>
+                            <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </div>
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-lg-6 -->
+                      <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                            <span>Sélectionnez une action...</span>
+                                        </div>
+                            <select class="form-control" ng-options="action as action.name for action in actions" 
+   ng-model="selectedItem" ng-change="updateMailState()"></select>
+                         <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-align-justify"></span>
+                                        </div>        
+                        </div>
+                      </div>
                     </div>
-                    <input type="text" ng-model="recherche" class="form-control" placeholder="Rechercher un e-mail..."/>
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" ng-click="razRecherche()">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-                </div>
 
                 <table class="table table-striped table-hover spacer">
                 <thead>
                     <tr>
+                        <th>
+                            <input id="mark-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)" />
+                
+                        </th>
                         <th class="colDe">
                             <a ng-click="triEmails('from')">De</a>
                             <span class="hSpacer" ng-class="cssChevronsTri('from')"></span>
@@ -68,11 +86,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="email in emailsFiltres = (dossierCourant.emails | filter:recherche) | orderBy:champTri:triDescendant" class="clickable" ng-click="versEmail(dossierCourant, email)">
-                        <td ng-bind-html="email.from | surbrillanceRecherche:recherche"></td>
-                        <td ng-bind-html="email.to | surbrillanceRecherche:recherche"></td>
-                        <td ng-bind-html="email.subject | surbrillanceRecherche:recherche"></td>
-                        <td>{{email.date | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <tr ng-repeat="email in emailsFiltres = (dossierCourant.emails | filter:recherche) | orderBy:champTri:triDescendant"  ng-class="{mailNonLu: !email.readed}">
+                        <td><input class="mark" type="checkbox" ng-model="email.checked" /></td>
+                        <td class="clickable" ng-bind-html="email.from | surbrillanceRecherche:recherche" ng-click="versEmail(dossierCourant, email)"></td>
+                        <td class="clickable" ng-bind-html="email.to | surbrillanceRecherche:recherche" ng-click="versEmail(dossierCourant, email)"></td>
+                        <td class="clickable" ng-bind-html="email.subject | surbrillanceRecherche:recherche" ng-click="versEmail(dossierCourant, email)"></td>
+                        <td class="clickable" ng-click="versEmail(dossierCourant, email)">{{email.date | date:'dd/MM/yyyy HH:mm'}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -28,7 +28,38 @@ angular.module("Webmail", [ "ngSanitize", "ui.tinymce", "MailServiceMock", "MesF
 	$scope.recherche = null;
 	$scope.razRecherche = function() {
 		$scope.recherche = null;
+        
 	}
+    
+    // options
+    $scope.actions=[{code:"markReaded", name:"Marquer comme lu"},{code:"markNotReaded", name:"Marquer comme non lu"},{code:"archive", name:"archiver"}];
+    
+    $scope.updateMailState=function(){
+       var code=$scope.selectedItem.code;
+        var dossier=$scope.dossierCourant;
+        if("markReaded"==code){
+            dossier.emails.forEach(function(email) {
+				if (email.checked) {
+					email.readed=true;
+				}
+			});
+        }
+        if("markNotReaded"==code){
+            dossier.emails.forEach(function(email) {
+				if (email.checked) {
+					email.readed=false;
+				}
+			});
+        }
+        if("archive"==code){
+            dossier.emails.forEach(function(email) {
+				if (email.checked) {
+					mailService.archiveMail(dossier, email);
+                    email.checked=false;
+				}
+			});
+        }
+    }
 
 	// création d'emails
 
@@ -50,8 +81,17 @@ angular.module("Webmail", [ "ngSanitize", "ui.tinymce", "MailServiceMock", "MesF
 
 	$scope.versEmail = function(dossier, email) {
 		$location.path("/" + dossier.value + "/" + email.id);
+       $scope.markAsReaded(email);
 	}
 
+    $scope.markAsReaded = function(email){
+        email.readed=true;
+    }
+    
+    $scope.markCheckedMailsAsReaded = function(){
+        email.readed=true;
+    }
+    
 	$scope.selectionDossier = function(valDossier) {
 		$scope.vueCourante = "vueDossier";
 		$scope.dossierCourant = mailService.getDossier(valDossier);
